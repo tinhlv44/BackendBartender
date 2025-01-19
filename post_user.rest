@@ -1,0 +1,14 @@
+POST http://localhost:3000/api/user/
+Content-Type: application/json
+
+{
+  "name": "Trần Mai L",
+  "email": "tranmail@example.com",
+  "password": "securePassword456",
+  "address": "456 Đường XYZ, Hà Nội",
+  "number": 987654321
+}
+
+
+
+

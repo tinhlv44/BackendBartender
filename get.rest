@@ -1,9 +1,0 @@
-POST https://backendbartender.onrender.com/api/products
-Content-Type: application/json
-
-{
-  "name": "helo nhe",
-  "quantity": 77,
-  "price": 100,
-  "image": "updated-image-url.jpg"
-}

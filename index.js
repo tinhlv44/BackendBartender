@@ -1,21 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
+//MOdel
+const User = require("./models/user.model.js");
 const Product = require("./models/product.model.js");
+const Post = require("./models/post.model.js");
+//Router
+const userRoute = require("./routes/user.router.js");
 const productRoute = require("./routes/product.route.js");
+const postRoute = require("./routes/post.route.js");
+
+const moderateRoute = require("./routes/moderation.routes.js");
+
 const app = express();
 require("dotenv").config();
-
-// middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-// routes
-app.use("/api/products", productRoute);
-
-app.get("/", (req, res) => {
-  res.send("Hello from Node API Server Updated");
-});
-// Sử dụng các biến từ .env
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 mongoose
@@ -29,32 +26,29 @@ mongoose
   .catch((e) => {
     console.log("Connection failed!" + e);
   });
+// Set up EJS as the view engine
+app.set("view engine", "ejs");
+// middleware
+app.use(express.json());
 
-//   const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
-// const { storage } = require("./firebase");
+app.use(express.static("public")); //this will helps to use style.css file
+app.use(express.urlencoded({ extended: true }));
 
-// // Hàm upload ảnh
-// const uploadImage = async (file) => {
-//   try {
-//     const storageRef = ref(storage, `images/${file.originalname}`);
-//     const snapshot = await uploadBytes(storageRef, file.buffer);
-//     const downloadURL = await getDownloadURL(snapshot.ref);
-//     return downloadURL; // URL của ảnh
-//   } catch (error) {
-//     console.error("Lỗi upload ảnh:", error);
-//     throw error;
-//   }
-// };
+// routes
+app.use("/api/user", userRoute);
+app.use("/api/products", productRoute);
+app.use("/api/post", postRoute);
+app.use("/", moderateRoute);
 
-// // Ví dụ: Gọi hàm upload
-// const multer = require("multer");
-// const upload = multer();
-
-// app.post("/upload", upload.single("image"), async (req, res) => {
-//   try {
-//     const downloadURL = await uploadImage(req.file);
-//     res.status(200).json({ url: downloadURL });
-//   } catch (error) {
-//     res.status(500).send("Lỗi upload ảnh");
-//   }
+app.get("/", (req, res) => {
+  res.send("Hello from Node API Server Updated");
+});
+// app.get("/moderate", async (req, res) => {
+//   const posts = await Post.find({});
+//   res.render("moderation", { posts });
 // });
+// app.get("/about", (req, res) => {
+//   console.log("req made on" + req.url);
+//   res.render("about", { title: "About" });
+// });
+// Sử dụng các biến từ .env

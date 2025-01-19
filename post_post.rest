@@ -1,0 +1,26 @@
+POST http://localhost:3000/api/post/
+Content-Type: application/json
+
+{
+  "title": "Du lịch bụi ở Đà Lạt",
+  "content": "Đà Lạt là một điểm đến lý tưởng cho những ai yêu thích thiên nhiên và những chuyến đi khám phá. Hãy cùng mình trải nghiệm chuyến du lịch bụi tại đây.",
+  "images": ["https://example.com/dalat1.jpg", "https://example.com/dalat2.jpg"],
+  "author": "678cadd45d2571ed1a639ee7",  
+  "likes": ["678cadd45d2571ed1a639ee7"],
+  "comments": [
+    {
+      "user": "678cadd45d2571ed1a639ee7",  
+      "content": "Đà Lạt thật sự rất đẹp!",
+      "createdAt": "2025-01-19T10:45:00Z"
+    }
+  ],
+  "status": "published",
+  "tags": ["du lịch", "Đà Lạt"],
+  "views": 250,
+  "approvalStatus": "approved",
+  "rejectionReason": ""
+}
+
+
+
+
