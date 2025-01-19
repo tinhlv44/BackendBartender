@@ -29,3 +29,32 @@ mongoose
   .catch((e) => {
     console.log("Connection failed!" + e);
   });
+
+//   const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
+// const { storage } = require("./firebase");
+
+// // Hàm upload ảnh
+// const uploadImage = async (file) => {
+//   try {
+//     const storageRef = ref(storage, `images/${file.originalname}`);
+//     const snapshot = await uploadBytes(storageRef, file.buffer);
+//     const downloadURL = await getDownloadURL(snapshot.ref);
+//     return downloadURL; // URL của ảnh
+//   } catch (error) {
+//     console.error("Lỗi upload ảnh:", error);
+//     throw error;
+//   }
+// };
+
+// // Ví dụ: Gọi hàm upload
+// const multer = require("multer");
+// const upload = multer();
+
+// app.post("/upload", upload.single("image"), async (req, res) => {
+//   try {
+//     const downloadURL = await uploadImage(req.file);
+//     res.status(200).json({ url: downloadURL });
+//   } catch (error) {
+//     res.status(500).send("Lỗi upload ảnh");
+//   }
+// });

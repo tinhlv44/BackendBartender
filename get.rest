@@ -1,9 +1,9 @@
-POST http://localhost:3000/api/products
+POST https://backendbartender.onrender.com/api/products
 Content-Type: application/json
 
 {
-  "name": "Updated Product Name",
-  "quantity": 50,
+  "name": "helo nhe",
+  "quantity": 77,
   "price": 100,
   "image": "updated-image-url.jpg"
 }
