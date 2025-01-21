@@ -1,0 +1,409 @@
+/* sidebar */
+aside {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 16rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: none;
+  z-index: 3;
+}
+
+aside img {
+  height: 2rem;
+  width: 2rem;
+}
+
+aside .top {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+aside .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.logo span {
+  color: var(--bg--greenlight);
+}
+
+.main-content {
+  margin-left: 17.125rem;
+}
+
+.main-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+main {
+  padding: 0;
+}
+
+.sidebar {
+  height: 85vh;
+  background-color: var(--bg--white);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.sidebar h3 {
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.sidebar a {
+  display: flex;
+  transition: all .3s ease-in;
+  gap: 2px;
+  align-items: center;
+  height: 3.2rem;
+  margin: 0 6px;
+  color: var(--bg--black);
+}
+
+.sidebar span {
+  transition: all .3s ease-in;
+  font-size: 1.6rem;
+  padding: 0 8px;
+}
+
+.sidebar a:last-child {
+  position: absolute;
+  bottom: 1rem;
+  color: var(--bg--danger);
+  width: 90%;
+}
+
+.sidebar a:last-child:hover {
+  background: var(--bg--danger);
+  border-radius: 66px;
+}
+
+.sidebar a.active {
+  background-color: var(--bg--greenlight);
+  margin: 0;
+  border-left: 5px solid var(--bg--black);
+  color: var(--bg--white);
+}
+
+.sidebar a:not(.active):hover {
+  color: var(--text--gray);
+  transition: .4s ease;
+}
+
+.sidebar a:not(.active):hover span {
+  color: var(--text--gray);
+  margin-left: 16px;
+  transition: .4s ease;
+}
+
+.sidebar a.active::before {
+  content: '';
+  width: 6px;
+  height: 100%;
+  background-color: var(--bg--greenlight);
+}
+
+
+.sidebar a span.msg_count {
+  background-color: var(--bg--danger);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: var(--bg--white);
+  margin-left: 6px;
+}
+
+/* sidebar */
+/* dasshboard main  */
+
+main input {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  background-color: var(--bg--white);
+  padding: 1rem;
+}
+
+main .date {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1.6rem;
+
+}
+
+main .dmiddle {
+  flex: 2;
+}
+
+main .dright {
+  flex: 1;
+}
+
+main .insight {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 6px;
+  margin-top: 1rem;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+main .insight>div {
+  background-color: var(--bg--white);
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: var(--box--shadow);
+  color: var(--bg--black);
+  margin-bottom: 0.7rem;
+}
+
+main .insight>div:hover {
+  box-shadow: none;
+}
+
+main .insight>div span {
+  background-color: var(--bg--black);
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: var(--bg--white);
+  font-size: 2rem;
+}
+
+main .insight>div .middle {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  gap: 10px;
+}
+
+main .insight .progressy {
+  position: relative;
+  height: 60px;
+  width: 60px;
+}
+
+main .insight .number {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: 1.4rem;
+}
+
+main .insight svg {
+  height: 150px;
+  width: 150px;
+  top: 0;
+  position: absolute;
+}
+
+main .insight svg circle {
+  fill: none;
+  stroke: var(--bg--black);
+  transform: rotate(270, 80, 90);
+  stroke-width: 5;
+}
+
+main .insight .sales svg circle {
+  stroke-dashoffset: 10;
+  stroke-dasharray: 180;
+}
+
+main .insight .expen svg circle {
+  stroke-dashoffset: 10;
+  stroke-dasharray: 170;
+}
+
+main .insight .income svg circle {
+  stroke-dashoffset: 10;
+  stroke-dasharray: 100;
+}
+
+main .recent {
+  margin-top: 1rem;
+}
+
+main table {
+  background-color: var(--bg--white);
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: var(--box--shadow);
+  transition: all .3s ease;
+  padding: 12px;
+  text-align: center;
+}
+
+main table:hover {
+  box-shadow: none;
+}
+
+main table tbody tr {
+  height: 3rem;
+  ;
+}
+
+/* dasshboard main  */
+
+/* navbar */
+.image img {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 3rem;
+  height: 3rem;
+}
+
+nav button {
+  /* display: none; */
+  background-color: transparent;
+}
+
+nav .theme-toggler {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 1.8rem;
+  width: 5rem;
+  cursor: pointer;
+  border-radius: 20%;
+}
+
+nav .theme-toggler span {
+  background-color: var(--bg--black);
+  font-size: 1.5rem;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--bg--white);
+}
+
+nav .theme-toggler span.active {
+  background-color: var(--bg--white);
+  color: var(--bg--black);
+}
+
+nav .info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.navbar {
+  position: sticky;
+  z-index: 2;
+  left: 12px;
+  right: 13px;
+  color: var(--bg--black);
+  top: 0.75rem;
+  min-height: 4.6875rem;
+  align-items: center;
+  background-color: transparent !important;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1.25rem;
+  box-shadow: rgba(255, 255, 255, 0.9) 0rem 0rem 0.0625rem 0.0625rem inset, rgba(0, 0, 0, 0.05) 0rem 1.25rem 1.6875rem 0rem;
+  backdrop-filter: blur(2.625rem);
+  border-color: rgba(226, 232, 240, 0.3);
+  margin-right: 1rem;
+}
+
+
+/* navbar */
+
+/* Media query */
+@media screen and (max-width: 1200px) {
+
+  aside {
+    max-width: 4rem;
+  }
+
+  .sidebar h3,
+  aside h5 {
+    display: none;
+  }
+
+  .sidebar a span.msg_count {
+    position: absolute;
+    right: 1px;
+    font-size: 8px;
+    padding: 4px;
+    margin: 0;
+  }
+
+  .main-content {
+    margin-left: 5.125rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  aside {
+    z-index: 20;
+    max-width: 16rem;
+    background-color: var(--bg--white);
+    border-radius: 10px;
+    margin: 8px 0;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .open {
+    transform: translateX(250px);
+  }
+
+  aside h2 {
+    font-size: 6px;
+  }
+
+  aside .close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .main-bottom {
+    flex-direction: column;
+  }
+
+
+  .sidebar h3,
+  aside h5 {
+    display: inline;
+  }
+
+  .sidebar a span.msg_count {
+    position: absolute;
+    right: 1px;
+    font-size: 8px;
+    padding: 4px;
+    margin: 0;
+  }
+
+  main .insight {
+    flex-direction: column;
+    margin: 20px;
+  }
+
+}
+
+/* Media query */

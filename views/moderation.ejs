@@ -1,82 +1,149 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Post Moderation</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-  <div class="container">
-    <h1>Moderation Panel</h1>
+<div class="container">
+  <h1>Moderation Panel</h1>
+
+  <!-- Các liên kết nhanh để truy cập vào các mục -->
+  <nav>
+    <ul>
+      <li><a href="/moderate">Danh sách chờ duyệt</a></li>
+      <li><a href="/moderate/approved">Danh sách đã duyệt</a></li>
+      <li><a href="/moderate/rejected">Danh sách đã từ chối</a></li>
+    </ul>
+  </nav>
+
+  <!-- Mục Danh Sách Chờ Duyệt -->
+  <div class="status-list">
+    <h2>Danh sách chờ duyệt</h2>
     <div class="post-list">
-      <% if (posts.length > 0) { %>
-        <% posts.forEach((post) => { %>
-          <div class="post-card">
-            <h2><%= post.title %></h2>
-            <p><%= post.content %></p>
-            
-            <!-- Hiển thị tên người đăng -->
-            <p><strong>Author:</strong> <%= post.author.name %></p>
-
-            <!-- Hiển thị trạng thái duyệt -->
-            <p><strong>Status:</strong> <%= post.approvalStatus %></p>
-            
-            <!-- Nếu bài đăng bị từ chối, hiển thị lý do -->
-            <% if (post.approvalStatus === "rejected") { %>
-              <p><strong>Rejection Reason:</strong> <%= post.rejectionReason %></p>
-            <% } %>
-
-            <% if (post.images && post.images.length > 0) { %>
-              <div class="post-images">
-                <% post.images.forEach((image) => { %>
-                  <img src="<%= image %>" alt="Post Image">
-                <% }); %>
-              </div>
-            <% } %>
-
-            <div class="post-actions">
-              <!-- Button cho duyệt và từ chối bài đăng -->
-              <% if (post.approvalStatus === "pending") { %>
-                <button class="approve-btn" onclick="handleApprove('<%= post._id %>')">Approve</button>
-                <button class="reject-btn" onclick="handleReject('<%= post._id %>')">Reject</button>
-              <% } %>
+      <% if (status==="pending" ) { %>
+        <% if (posts.length> 0) { %>
+          <% posts.forEach((post)=> { %>
+            <div class="post-card">
+              <h2>
+                <%= post.title %>
+              </h2>
+              <p>
+                <%= post.content %>
+              </p>
+              <p><strong>Người đăng:</strong>
+                <%= post.author.name %>
+              </p>
+              <% if (post.images && post.images.length> 0) { %>
+                <div class="post-images">
+                  <% post.images.forEach((image)=> { %>
+                    <img src="<%= image %>" alt="Post Image">
+                    <% }); %>
+                </div>
+                <% } %>
+                  <div class="post-actions">
+                    <button class="approve-btn" onclick="handleApprove('<%= post._id %>')">Approve</button>
+                    <button class="reject-btn" onclick="handleReject('<%= post._id %>')">Reject</button>
+                  </div>
             </div>
-          </div>
-        <% }); %>
-      <% } else { %>
-        <p>No posts pending for moderation.</p>
-      <% } %>
+            <% }); %>
+              <% } else { %>
+                <p>No posts pending for moderation.</p>
+                <% } %>
+                  <% } %>
     </div>
   </div>
 
-  <script>
-    function handleApprove(postId) {
-      fetch(`/moderate/approve/${postId}`, { method: "POST" })
+  <!-- Mục Danh Sách Đã Duyệt -->
+  <div class="status-list">
+    <h2>Danh sách đã duyệt</h2>
+    <div class="post-list">
+      <% if (status==="approved" ) { %>
+        <% if (posts.length> 0) { %>
+          <% posts.forEach((post)=> { %>
+            <div class="post-card">
+              <h2>
+                <%= post.title %>
+              </h2>
+              <p>
+                <%= post.content %>
+              </p>
+              <p><strong>Người đăng:</strong>
+                <%= post.author.name %>
+              </p>
+              <p><strong>Status:</strong> Approved</p>
+              <% if (post.images && post.images.length> 0) { %>
+                <div class="post-images">
+                  <% post.images.forEach((image)=> { %>
+                    <img src="<%= image %>" alt="Post Image">
+                    <% }); %>
+                </div>
+                <% } %>
+            </div>
+            <% }); %>
+              <% } else { %>
+                <p>No approved posts.</p>
+                <% } %>
+                  <% } %>
+    </div>
+  </div>
+
+  <!-- Mục Danh Sách Đã Từ Chối -->
+  <div class="status-list">
+    <h2>Danh sách đã từ chối</h2>
+    <div class="post-list">
+      <% if (status==="rejected" ) { %>
+        <% if (posts.length> 0) { %>
+          <% posts.forEach((post)=> { %>
+            <div class="post-card">
+              <h2>
+                <%= post.title %>
+              </h2>
+              <p>
+                <%= post.content %>
+              </p>
+              <p><strong>Người đăng:</strong>
+                <%= post.author.name %>
+              </p>
+              <p><strong>Status:</strong> Rejected</p>
+              <p><strong>Reason:</strong>
+                <%= post.rejectionReason %>
+              </p>
+              <% if (post.images && post.images.length> 0) { %>
+                <div class="post-images">
+                  <% post.images.forEach((image)=> { %>
+                    <img src="<%= image %>" alt="Post Image">
+                    <% }); %>
+                </div>
+                <% } %>
+            </div>
+            <% }); %>
+              <% } else { %>
+                <p>No rejected posts.</p>
+                <% } %>
+                  <% } %>
+    </div>
+  </div>
+</div>
+
+<script>
+  function handleApprove(postId) {
+    fetch(`/moderate/approve/${postId}`, { method: "POST" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) alert("Post approved successfully!");
+        else alert("Error approving the post.");
+        location.reload();
+      });
+  }
+
+  function handleReject(postId) {
+    const reason = prompt("Enter a reason for rejection:");
+    if (reason) {
+      fetch(`/moderate/reject/${postId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reason }),
+      })
         .then((res) => res.json())
         .then((data) => {
-          if (data.success) alert("Post approved successfully!");
-          else alert("Error approving the post.");
+          if (data.success) alert("Post rejected successfully!");
+          else alert("Error rejecting the post.");
           location.reload();
         });
     }
-
-    function handleReject(postId) {
-      const reason = prompt("Enter a reason for rejection:");
-      if (reason) {
-        fetch(`/moderate/reject/${postId}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ reason }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.success) alert("Post rejected successfully!");
-            else alert("Error rejecting the post.");
-            location.reload();
-          });
-      }
-    }
-  </script>
-</body>
-</html>
+  }
+</script>
