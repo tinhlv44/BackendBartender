@@ -1,86 +1,120 @@
 const User = require("../models/user.model");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-// Get all users
-const getUsers = async (req, res) => {
+const registerUser = async (req, res) => {
   try {
-    const users = await User.find({});
-    res.status(200).json(users);
+    const { username, password, fullName, email } = req.body;
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({ message: "Email đã tồn tại!" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      username,
+      passwordHash: hashedPassword,
+      fullName,
+      email,
+    });
+
+    await newUser.save();
+    res.status(201).json({ message: "Đăng ký thành công!" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Lỗi server!", error: error.message });
   }
 };
 
-// Get a specific user by ID
-const getUser = async (req, res) => {
+const loginUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "Tài khoản không tồn tại!" });
     }
+
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Sai mật khẩu!" });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.status(200).json({
+      token,
+      user: {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        fullName: user.fullName,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Lỗi server!", error: error.message });
+  }
+};
+
+const getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-passwordHash");
+    if (!user) {
+      return res.status(404).json({ message: "Không tìm thấy người dùng!" });
+    }
+
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Lỗi server!", error: error.message });
   }
 };
 
-// Create a new user
-const createUser = async (req, res) => {
+const updateUserProfile = async (req, res) => {
   try {
-    const { name, email, password, address, number } = req.body;
-    const newUser = new User({
-      name,
-      email,
-      password,
-      address,
-      number,
-    });
-
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Update an existing user
-const updateUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const { fullName, bio, avatarURL, socialLinks } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.userId,
+      { fullName, bio, avatarURL, socialLinks, last_active: new Date() },
+      { new: true }
+    ).select("-passwordHash");
 
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "Không tìm thấy người dùng!" });
     }
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Lỗi server!", error: error.message });
   }
 };
 
-// Delete a user
-const deleteUser = async (req, res) => {
+const getAllUsers = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.findByIdAndDelete(id);
+    const users = await User.find().select("-passwordHash");
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    if (!users.length) {
+      return res.status(404).json({ message: "Không có người dùng nào!" });
     }
 
-    res.status(200).json({ message: "User deleted successfully" });
+    res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Lỗi server!", error: error.message });
   }
 };
 
 module.exports = {
-  getUsers,
-  getUser,
-  createUser,
-  updateUser,
-  deleteUser,
+  registerUser,
+  loginUser,
+  getUserProfile,
+  updateUserProfile,
+  getAllUsers,
 };

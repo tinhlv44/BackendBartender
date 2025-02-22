@@ -1,0 +1,31 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Ảnh</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Tham chiếu file CSS (tùy chọn) -->
+</head>
+
+<body>
+    <div class="container">
+        <h1>Upload Ảnh</h1>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="file">Chọn ảnh để upload:</label>
+            <input type="file" id="file" name="file" accept="image/*" required>
+            <button type="submit">Upload</button>
+        </form>
+
+        <% if (message) { %>
+            <p class="message">
+                <%= message %>
+            </p>
+            <% if (fileUrl) { %>
+                <p>Ảnh đã upload thành công:</p>
+                <img src="<%= fileUrl %>" alt="Ảnh đã upload" width="300">
+                <% } %>
+                    <% } %>
+    </div>
+</body>
+
+</html>

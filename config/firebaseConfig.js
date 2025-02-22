@@ -1,15 +1,18 @@
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+const firebase = require("firebase/app");
+require("firebase/storage");
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC7KoBW4DvaGnUklptWlfoN_Hj3bEHVEnc",
-  authDomain: "levatimovie.firebaseapp.com",
-  databaseURL: "https://levatimovie-default-rtdb.firebaseio.com",
-  projectId: "levatimovie",
-  storageBucket: "levatimovie.appspot.com",
-  messagingSenderId: "623211594806",
-  appId: "1:623211594806:web:b4253e3c0d2d016ecbc497",
+  apiKey: "AIzaSyCpua1YZhbOoHREipvNYvOVbUfpi1wCpXo",
+  authDomain: "mixology-9a467.firebaseapp.com",
+  databaseURL: "https://mixology-9a467-default-rtdb.firebaseio.com",
+  projectId: "mixology-9a467",
+  storageBucket: "mixology-9a467.appspot.com",
+  messagingSenderId: "570133460824",
+  appId: "1:570133460824:web:710e9a9ac26de4a521972d",
+  measurementId: "G-TMHFC990KR",
 };
-
-const app = initializeApp(firebaseConfig);
-export const storage = getStorage(app);
+// Khởi tạo Firebase
+firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+const storageRef = storage.ref();
+module.exports = storageRef;
