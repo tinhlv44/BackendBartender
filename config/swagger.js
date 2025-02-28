@@ -11,13 +11,21 @@ const options = {
     },
     servers: [{ url: "http://localhost:3000", description: "Local server" }],
   },
-  apis: ["./routes/*.js"], // Đọc API từ file router
+  apis: ["./models/*.js", "./routes/*.js"], // Đọc API từ model và routes
+};
+
+const swaggerOptions = {
+  defaultModelsExpandDepth: 3, // Ẩn models bên trái
 };
 
 const swaggerSpec = swaggerJsDoc(options);
 
 const swaggerDocs = (app) => {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, { swaggerOptions })
+  );
 };
 
 module.exports = swaggerDocs;

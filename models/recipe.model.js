@@ -37,14 +37,8 @@ const recipeSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
-    comments: {
-      type: Number,
-      default: 0,
-    },
+    commentsCount: { type: Number, default: 0 },
+    likesCount: { type: Number, default: 0 },
     difficulty: {
       type: String,
       enum: ["Dễ", "Trung bình", "Khó"],

@@ -6,10 +6,11 @@ const Post = require("../models/post.model");
 async function getPendingPosts(req, res) {
   try {
     const posts = await Post.find({ approvalStatus: "pending" })
-      .populate("author", "name") // Dùng populate để lấy tên người đăng
+      .populate("userID", "name") // Dùng populate để lấy tên người đăng
       .exec();
 
     res.render("moderation", { posts, status: "pending" });
+    console.log(posts);
   } catch (err) {
     console.error(err);
     res.status(500).send("Error fetching posts");
