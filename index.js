@@ -25,6 +25,7 @@ const followRoute = require("./routes/follow.route");
 const notificationRoute = require("./routes/notification.route");
 const tagRoute = require("./routes/tag.route");
 const recipeRoute = require("./routes/recipe.routes");
+const analysisRoute = require("./routes/analysis.routers");
 // Authenticate
 const authenticateToken = require("./middleware/authenticateToken");
 
@@ -77,6 +78,14 @@ app.use("/api/tag", tagRoute);
 //recipe
 app.use("/api/recipe", recipeRoute);
 
+app.use((req, res, next) => {
+  res.locals.currentPath = req.path; // chỉ đường dẫn, không query params
+  // Nếu muốn giữ nguyên query, có thể dùng: req.originalUrl
+  next();
+});
+
+//analysis
+app.use("/admin/analysis", analysisRoute);
 // Admin
 app.use("/admin", authenticateToken, moderateRoute);
 app.use("/", authRoute);
